@@ -4,32 +4,26 @@ export default function LoginForm(props) {
   const refSenha = useRef();
   const [erroEmail, setErroEmail] = useState();
   const [erroSenha, setErroSenha] = useState();
-  const [erroEmailESenha, setErroEmailESenha] = useState();
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!refEmail.current.value && !refSenha.current.value) {
-      setErroEmailESenha("Preencha seus dados");
-      setErroEmail("");
-      setErroSenha("");
-      refEmail.current.focus()
-      return;
-    } else {
-      setErroEmailESenha("");
-    } 
+    let valido = true;
+
     if (!refEmail.current.value) {
       setErroEmail("Email obrigatório");
       refEmail.current.focus()
+      valido = valido && false;
     } else {
       setErroEmail("");
     }
     if (!refSenha.current.value) {
       setErroSenha("Senha Incorreta");
       refSenha.current.focus()
-      return;
+      valido = valido && false;
     } else {
       setErroSenha("");
     }
+    valido = valido && false;
     if (erroEmail != "" || erroSenha != "") {
       return;
     }
@@ -47,7 +41,6 @@ export default function LoginForm(props) {
         <label htmlFor="senha">Senha</label>
         <input type="password" id="senha" name="senha" ref={refSenha} />
         {erroSenha && <p>{erroSenha}</p>}
-        {erroEmailESenha && <p>{erroEmailESenha}</p>}
       </div>
       <button>Entrar</button>
     </form>
